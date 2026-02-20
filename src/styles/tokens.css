@@ -1,0 +1,62 @@
+/*
+ * ── Design Tokens ─────────────────────────────────────────────────────────
+ *
+ * To change the brand: edit --color-primary (and --color-primary-dark / -tint).
+ * To change type sizes: edit the --text-* scale.
+ * All other design decisions derive from these variables.
+ */
+
+:root {
+  /* ── Colors ────────────────────────────────────────────────────────────── */
+  --color-bg:           #f4f6fb;   /* page background */
+  --color-surface:      #ffffff;   /* card / section surface */
+  --color-border:       #e1e7f0;   /* dividers, card outlines */
+  --color-text:         #0d1120;   /* primary body text */
+  --color-muted:        #566074;   /* secondary text, captions */
+
+  --color-primary:      #2563eb;   /* ← main brand color */
+  --color-primary-dark: #1d4ed8;   /* hover / pressed state */
+  --color-primary-tint: #eff6ff;   /* hero bg wash, pill backgrounds */
+
+  --color-accent:       #f59e0b;   /* notice / warning highlight */
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --text-h1:   clamp(1.875rem, 5vw, 2.625rem); /* 30–42 px */
+  --text-h2:   clamp(1.25rem,  3vw, 1.75rem);  /* 20–28 px */
+  --text-h3:   1.125rem;                        /* 18 px    */
+  --text-body: 1rem;                            /* 16 px    */
+  --text-sm:   0.875rem;                        /* 14 px    */
+  --text-xs:   0.75rem;                         /* 12 px    */
+
+  /* ── Spacing ──────────────────────────────────────────────────────────── */
+  --space-1:   0.25rem;   /*  4 px */
+  --space-2:   0.5rem;    /*  8 px */
+  --space-3:   0.75rem;   /* 12 px */
+  --space-4:   1rem;      /* 16 px */
+  --space-5:   1.25rem;   /* 20 px */
+  --space-6:   1.5rem;    /* 24 px */
+  --space-8:   2rem;      /* 32 px */
+  --space-10:  2.5rem;    /* 40 px */
+  --space-12:  3rem;      /* 48 px */
+  --space-16:  4rem;      /* 64 px */
+
+  /* ── Layout ───────────────────────────────────────────────────────────── */
+  --container-max: 920px;
+  --nav-height:    3.5rem;
+
+  /* ── Border radius ────────────────────────────────────────────────────── */
+  --radius-sm:  4px;
+  --radius-md:  10px;
+  --radius-lg:  18px;
+
+  /* ── Shadows ──────────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 20px rgba(0,0,0,.09), 0 1px 3px rgba(0,0,0,.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+
+  /* ── Motion ───────────────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:      160ms;
+}

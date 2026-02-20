@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import SectionBody from '../components/SectionBody.astro';
+import { loadPages, groupSections } from '../lib/content.ts';
+import type { PageData, Section as ContentSection } from '../lib/content.ts';
+
+// ── Pricing-tier grouping ──────────────────────────────────────────────────
+//
+// Consecutive sections whose IDs end in one of these suffixes are wrapped
+// in a .pricing-grid element so they appear side-by-side as a comparison grid.
+// All other sections render individually as .section cards.
+//
+const PRICING_TIER_SUFFIXES = new Set([
+  'SNAPSHOT',
+  'FOUNDATION_LITE',
+  'FOUNDATION_STANDARD',
+]);
+
+type DisplayGroup =
+  | { kind: 'pricing-grid'; items: ContentSection[] }
+  | { kind: 'single';       item:  ContentSection   };
+
+function buildDisplayGroups(secs: ContentSection[]): DisplayGroup[] {
+  const result: DisplayGroup[] = [];
+  let i = 0;
+  while (i < secs.length) {
+    const suffix = secs[i]!.id.split('.').pop() ?? '';
+    if (PRICING_TIER_SUFFIXES.has(suffix)) {
+      // Collect the run of consecutive pricing-tier sections
+      const run: ContentSection[] = [];
+      while (
+        i < secs.length &&
+        PRICING_TIER_SUFFIXES.has(secs[i]!.id.split('.').pop() ?? '')
+      ) {
+        run.push(secs[i]!);
+        i++;
+      }
+      result.push({ kind: 'pricing-grid', items: run });
+    } else {
+      result.push({ kind: 'single', item: secs[i]! });
+      i++;
+    }
+  }
+  return result;
+}
+
+// ── Route generation ───────────────────────────────────────────────────────
+
+export async function getStaticPaths() {
+  const pages = loadPages();
+
+  // Top-level pages only in the nav (slugs with at most one path segment).
+  // e.g. "/", "/pricing", "/services", "/contact" but NOT "/case-studies/demo"
+  const navPages = pages
+    .filter(p => (p.slug.match(/\//g) ?? []).length <= 1)
+    .map(p => ({ slug: p.slug, title: p.title }));
+
+  return pages.map(page => {
+    const slugParts = page.slug.replace(/^\//, '').split('/').filter(Boolean);
+    return {
+      params: { slug: slugParts.length ? slugParts.join('/') : undefined },
+      props: { page, navPages } satisfies { page: PageData; navPages: { slug: string; title: string }[] },
+    };
+  });
+}
+
+interface Props {
+  page: PageData;
+  navPages: Array<{ slug: string; title: string }>;
+}
+
+const { page, navPages } = Astro.props;
+const sections = groupSections(page.blocks);
+const displayGroups = buildDisplayGroups(sections);
+---
+
+<Base title={page.title} navPages={navPages}>
+  <div class="page-content">
+    {displayGroups.map(group => {
+
+      // ── Pricing-tier comparison grid ─────────────────────────────────────
+      if (group.kind === 'pricing-grid') {
+        return (
+          <div class="pricing-grid">
+            {group.items.map(section => {
+              const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
+              return (
+                <Section id={section.id} suffix={suffix}>
+                  <SectionBody section={section} />
+                </Section>
+              );
+            })}
+          </div>
+        );
+      }
+
+      // ── Single section card ──────────────────────────────────────────────
+      const section = group.item;
+      const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
+      return (
+        <Section id={section.id} suffix={suffix}>
+          <SectionBody section={section} />
+        </Section>
+      );
+
+    })}
+  </div>
+</Base>

@@ -1,0 +1,36 @@
+---
+/**
+ * Button
+ * An anchor-based CTA styled with the global .btn design system.
+ * Use this in hand-written Astro templates. Content-driven CTAs (from /content
+ * pages) are rendered by renderBlockBody() as <a class="btn"> strings and do
+ * not need this component.
+ *
+ * Props:
+ *   href     – destination URL (use full URL or path; supports mailto:)
+ *   variant  – "primary" (default, filled blue) | "secondary" (outline)
+ *   external – set true to add target="_blank" rel="noopener noreferrer"
+ *
+ * Usage:
+ *   <Button href="https://calendly.com/nrorvem">Book a call</Button>
+ *   <Button href="/pricing" variant="secondary">See pricing</Button>
+ *   <Button href="https://calendly.com/nrorvem" external>Open in new tab</Button>
+ */
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  external?: boolean;
+}
+
+const { href, variant = 'primary', external = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['btn', variant === 'secondary' && 'btn-secondary']}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <slot />
+</a>

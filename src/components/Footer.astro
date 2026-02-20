@@ -1,0 +1,46 @@
+---
+import { loadVariables } from '../lib/content.ts';
+
+interface Props {
+  pages: Array<{ slug: string; title: string }>;
+}
+
+const { pages } = Astro.props;
+const vars = loadVariables();
+const email = vars['EMAIL'] ?? 'rudy.b@nrorvem.com';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <a href="/" class="site-logo">AI Discovery</a>
+      <p>Helping Bay Area HVAC companies get found by AI-powered search.</p>
+    </div>
+
+    <!-- Nav column -->
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <ul>
+        {pages.map(page => (
+          <li><a href={page.slug}>{page.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Contact column -->
+    <div class="footer-contact">
+      <p class="footer-contact-label">Get in touch</p>
+      <a href={`mailto:${email}`}>{email}</a>
+    </div>
+
+  </div>
+
+  <!-- Legal bar -->
+  <div class="footer-legal">
+    <div class="container">
+      <p>&copy; {year} AI Discovery. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

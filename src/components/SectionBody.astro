@@ -1,0 +1,58 @@
+---
+/**
+ * SectionBody
+ * Renders the inner content of a parsed Section: its direct level-2 fields
+ * and any level-3 subsections displayed as a card grid.
+ *
+ * Used by [...slug].astro so that the same inner rendering logic works
+ * whether a section sits alone or inside a pricing-tier grid wrapper.
+ */
+
+import Card from './Card.astro';
+import { renderBlockBody } from '../lib/content.ts';
+import type { Section as ContentSection } from '../lib/content.ts';
+
+interface Props {
+  section: ContentSection;
+}
+
+const { section } = Astro.props;
+
+// Pre-compute visible subsection cards
+const visibleCards = section.subsections.filter(
+  sub => sub.body.trim() || sub.fields.some(f => f.body.trim())
+);
+---
+
+{/* Body on the level-1 block itself (e.g. CONTACT.DETAILS list, NOTICE text) */}
+{section.body.trim() && (
+  <div class="field" set:html={renderBlockBody(section.body, section.id)} />
+)}
+
+{/* Level-2 direct fields: headline, subhead, intro, CTA, price, etc. */}
+{section.directFields.map(field => {
+  const html = renderBlockBody(field.body, field.id);
+  if (!html) return null;
+  const fieldSuffix = (field.id.split('.').pop() ?? '').toLowerCase();
+  return <div class={`field field-${fieldSuffix}`} set:html={html} />;
+})}
+
+{/* Level-3 sub-sections rendered as a card grid.
+    Examples: HOME.OFFERS.A/B/C, HOME.HOW_IT_WORKS.STEP_1/2/3 */}
+{visibleCards.length > 0 && (
+  <div class="cards">
+    {visibleCards.map(sub => (
+      <Card>
+        {sub.body.trim() && (
+          <div class="field" set:html={renderBlockBody(sub.body, sub.id)} />
+        )}
+        {sub.fields.map(field => {
+          const html = renderBlockBody(field.body, field.id);
+          if (!html) return null;
+          const fieldSuffix = (field.id.split('.').pop() ?? '').toLowerCase();
+          return <div class={`field field-${fieldSuffix}`} set:html={html} />;
+        })}
+      </Card>
+    ))}
+  </div>
+)}

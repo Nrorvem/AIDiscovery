@@ -1,0 +1,57 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Container from '../components/Container.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  navPages: Array<{ slug: string; title: string }>;
+}
+
+const { title, navPages } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | AI Discovery</title>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <Nav pages={navPages} />
+    <main id="main-content">
+      <Container>
+        <slot />
+      </Container>
+    </main>
+    <Footer pages={navPages} />
+
+    <!-- Scroll fade-in
+         To disable: delete this script block. Elements remain fully visible.
+         Motion guard: script checks prefers-reduced-motion before touching the DOM,
+         so zero animation fires for users who have that preference set. -->
+    <script>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        document.querySelectorAll<HTMLElement>('.section').forEach(el => {
+          el.setAttribute('data-animate', '');
+          observer.observe(el);
+        });
+      }
+    </script>
+  </body>
+</html>

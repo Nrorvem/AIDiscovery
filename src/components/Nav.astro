@@ -1,0 +1,137 @@
+---
+import { loadVariables } from '../lib/content.ts';
+
+interface Props {
+  pages: Array<{ slug: string; title: string }>;
+}
+
+const { pages } = Astro.props;
+const currentPath = Astro.url.pathname;
+const vars = loadVariables();
+const calendlyLink = vars['CALENDLY_LINK'] ?? 'https://calendly.com/nrorvem';
+---
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">AI Discovery</a>
+
+    <!-- Right side: nav links + CTA + mobile toggle -->
+    <div class="nav-group">
+
+      <!-- Desktop nav links -->
+      <nav aria-label="Primary navigation">
+        <ul class="nav-list">
+          {pages.map(page => (
+            <li>
+              <a
+                href={page.slug}
+                class={currentPath === page.slug ? 'active' : ''}
+                aria-current={currentPath === page.slug ? 'page' : undefined}
+              >
+                {page.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Desktop CTA (hidden on mobile; shown in drawer instead) -->
+      <a
+        href={calendlyLink}
+        class="btn nav-cta"
+        rel="noopener noreferrer"
+      >
+        Talk about monthly management
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+        aria-label="Open navigation menu"
+        type="button"
+      >
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" focusable="false">
+          <rect y="3"  width="22" height="2" rx="1" fill="currentColor"/>
+          <rect y="10" width="22" height="2" rx="1" fill="currentColor"/>
+          <rect y="17" width="22" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Mobile nav drawer -->
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation" hidden>
+    <ul>
+      {pages.map(page => (
+        <li>
+          <a
+            href={page.slug}
+            class={currentPath === page.slug ? 'active' : ''}
+            aria-current={currentPath === page.slug ? 'page' : undefined}
+          >
+            {page.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <!-- CTA repeated in the drawer so it's reachable on mobile -->
+    <div class="drawer-cta-wrap">
+      <a
+        href={calendlyLink}
+        class="btn drawer-cta"
+        rel="noopener noreferrer"
+      >
+        Talk about monthly management
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
+  const drawer = document.getElementById('nav-drawer') as HTMLElement | null;
+
+  if (toggle && drawer) {
+    function openDrawer() {
+      drawer!.removeAttribute('hidden');
+      toggle!.setAttribute('aria-expanded', 'true');
+      toggle!.setAttribute('aria-label', 'Close navigation menu');
+      // Move keyboard focus to the first link in the drawer
+      const first = drawer!.querySelector<HTMLElement>('a, button');
+      first?.focus();
+    }
+
+    function closeDrawer() {
+      drawer!.setAttribute('hidden', '');
+      toggle!.setAttribute('aria-expanded', 'false');
+      toggle!.setAttribute('aria-label', 'Open navigation menu');
+    }
+
+    // Toggle on button click
+    toggle.addEventListener('click', () => {
+      if (drawer.hasAttribute('hidden')) {
+        openDrawer();
+      } else {
+        closeDrawer();
+        toggle.focus(); // return focus to trigger when closing
+      }
+    });
+
+    // Close on Escape — return focus to toggle
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !drawer.hasAttribute('hidden')) {
+        closeDrawer();
+        toggle.focus();
+      }
+    });
+
+    // Auto-close when any drawer link is followed
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+  }
+</script>

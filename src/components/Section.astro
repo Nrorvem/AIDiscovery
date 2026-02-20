@@ -1,0 +1,29 @@
+---
+/**
+ * Section
+ * A padded, card-style <section> block that participates in the design system.
+ *
+ * Props:
+ *   id     – passed through as the HTML id (used for scroll-to and CSS targeting)
+ *   suffix – last segment of the block ID in lowercase, e.g. "hero", "final_cta"
+ *            Becomes the class "section-{suffix}" so global.css variants apply.
+ *
+ * Usage:
+ *   <Section id="HOME.HERO" suffix="hero">…</Section>
+ *   <Section>…</Section>   ← no variant, just the base .section card style
+ */
+
+interface Props {
+  id?: string;
+  suffix?: string;
+}
+
+const { id, suffix } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['section', suffix && `section-${suffix}`]}
+>
+  <slot />
+</section>

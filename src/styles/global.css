@@ -1,0 +1,818 @@
+@import './tokens.css';
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+img, video { max-width: 100%; display: block; }
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Utility: screen-reader-only text ─────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Skip navigation (accessibility) ─────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 200;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-2) var(--space-5);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+/* ── Layout container ─────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+/* ── Site header / nav ────────────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+}
+
+.site-logo {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+/* Desktop nav list */
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: var(--space-6);
+}
+
+.nav-list a {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-list a:hover      { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+.nav-list a.active     { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+/* Right-side group: nav links + CTA + hamburger */
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Desktop CTA — hidden below the mobile breakpoint */
+.nav-cta {
+  margin-top: 0;
+  margin-right: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .nav-cta { display: none; }
+}
+
+/* CTA inside the mobile drawer */
+.drawer-cta-wrap {
+  padding: var(--space-4) 0 var(--space-2);
+}
+
+.drawer-cta {
+  display: block;
+  text-align: center;
+  margin-top: 0;
+  margin-right: 0;
+}
+
+/* Mobile hamburger button (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+}
+.nav-toggle:hover { color: var(--color-primary); }
+
+/* Mobile nav drawer */
+.nav-drawer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-5) var(--space-5);
+}
+.nav-drawer[hidden] { display: none; }
+
+.nav-drawer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-drawer a {
+  display: block;
+  padding: var(--space-3) 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+}
+.nav-drawer li:last-child a { border-bottom: none; }
+.nav-drawer a:hover  { color: var(--color-primary); }
+.nav-drawer a.active { color: var(--color-primary); }
+
+@media (max-width: 680px) {
+  .nav-list    { display: none; }
+  .nav-toggle  { display: flex; }
+}
+
+/* ── Main content ─────────────────────────────────────────────────────────── */
+main { padding-bottom: var(--space-16); }
+
+.page-content { padding-top: var(--space-6); }
+
+/* ── Section base ─────────────────────────────────────────────────────────── */
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10) var(--space-8);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 680px) {
+  .section { padding: var(--space-8) var(--space-5); }
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+.section-hero {
+  background: linear-gradient(140deg, var(--color-primary-tint) 0%, #fff 65%);
+  border-color: #d4e4fc;
+  box-shadow: var(--shadow-md);
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+@media (max-width: 680px) {
+  .section-hero { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+}
+
+.section-hero .field-headline h2 {
+  font-size: var(--text-h1);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  max-width: 22ch;
+}
+
+.section-hero .field-subhead p {
+  font-size: 1.075rem;
+  color: var(--color-muted);
+  max-width: 56ch;
+  margin-top: var(--space-3);
+}
+
+/* Hero CTA row */
+.section-hero .field-cta_primary,
+.section-hero .field-cta_secondary { display: inline-block; }
+
+/* ── Under-hero benefit chips ─────────────────────────────────────────────── */
+.section-under_hero_bullets {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: var(--space-4) 0 var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.section-under_hero_bullets .field > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section-under_hero_bullets .field > ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.section-under_hero_bullets .field > ul li::before {
+  content: '✓';
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+  aria-hidden: true;
+}
+
+/* ── Final CTA banner ─────────────────────────────────────────────────────── */
+.section-final_cta {
+  background: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  text-align: center;
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+.section-final_cta .field-headline h2 {
+  color: #fff;
+  font-size: var(--text-h2);
+}
+
+.section-final_cta .field-subhead p,
+.section-final_cta .field p {
+  color: rgba(255,255,255,0.82);
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.section-final_cta .btn {
+  background: #fff;
+  color: var(--color-primary);
+  margin-top: var(--space-6);
+}
+.section-final_cta .btn:hover { background: var(--color-primary-tint); }
+
+.section-final_cta .field-fallback p,
+.section-final_cta .field-fallback a {
+  color: rgba(255,255,255,0.65);
+  font-size: var(--text-sm);
+  margin-top: var(--space-3);
+}
+
+/* ── Notice / warning section ─────────────────────────────────────────────── */
+.section-notice {
+  background: #fffbea;
+  border-color: #fde68a;
+  border-left: 4px solid var(--color-accent);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+.section-notice .field p { color: #92400e; font-weight: 500; }
+
+/* ── Card grids (level-3 sub-sections: offers, steps, etc.) ───────────────── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push the CTA to the bottom of a card */
+.card .field-cta,
+.card .field-button {
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+/* Card hover */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition:
+      box-shadow var(--dur) var(--ease-out),
+      transform  var(--dur) var(--ease-out);
+  }
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+/* ── Social proof section ─────────────────────────────────────────────────── */
+.section-social_proof {
+  background: linear-gradient(135deg, #f8faff 0%, var(--color-surface) 100%);
+  border-style: dashed;
+}
+
+/* ── FAQ section ──────────────────────────────────────────────────────────── */
+.section-faq .field {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.section-faq .field:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section-faq strong {
+  display: block;
+  color: var(--color-text);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+/* ── Pricing page header ──────────────────────────────────────────────────── */
+.section-header {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* "Most Popular" badge on Foundation Standard */
+.section-foundation_standard {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md), 0 0 0 2px var(--color-primary-tint);
+  position: relative;
+}
+.section-foundation_standard::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -0.75rem;
+  left: var(--space-8);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Typography within fields ─────────────────────────────────────────────── */
+.field + .field { margin-top: var(--space-4); }
+
+.card .field + .field { margin-top: var(--space-3); }
+
+.field h2 {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.field h3 {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.field p {
+  color: var(--color-muted);
+  margin-top: var(--space-2);
+  max-width: 65ch;
+}
+
+.field ul,
+.field ol {
+  padding-left: var(--space-5);
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+}
+
+.field li { margin-top: var(--space-2); line-height: 1.55; }
+
+/* Inline links inside field text */
+.field a:not(.btn) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.field a:not(.btn):hover { color: var(--color-primary-dark); }
+
+/* ── Price / Timeline ─────────────────────────────────────────────────────── */
+.field-price .price {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+  margin-top: var(--space-1);
+}
+
+.field-timeline .timeline {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ── Buttons / CTAs ───────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 0.625rem 1.375rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  margin-top: var(--space-3);
+  margin-right: var(--space-2);
+}
+
+/* Secondary CTA: outline style — applied by context (.field-cta_secondary)
+   or explicitly via Button variant="secondary" → .btn-secondary class */
+.field-cta_secondary .btn,
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.field-cta_secondary .btn:hover,
+.btn-secondary:hover {
+  background: var(--color-primary-tint);
+}
+
+/* Button hover + motion */
+.btn:hover { background: var(--color-primary-dark); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition:
+      background    var(--dur) var(--ease-out),
+      color         var(--dur) var(--ease-out),
+      border-color  var(--dur) var(--ease-out),
+      transform     var(--dur) var(--ease-out),
+      box-shadow    var(--dur) var(--ease-out);
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+  }
+  .btn:active { transform: translateY(0); box-shadow: none; }
+
+  /* Don't lift secondary CTA */
+  .field-cta_secondary .btn:hover,
+  .btn-secondary:hover { box-shadow: none; }
+}
+
+/* ── Focus styles ─────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: #0d1120;
+  color: rgba(255,255,255,0.7);
+  margin-top: var(--space-10);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-10);
+}
+
+@media (min-width: 560px) {
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1.5fr; gap: var(--space-10); }
+}
+
+/* Brand column */
+.footer-brand .site-logo {
+  color: #fff;
+  font-size: 1rem;
+  display: inline-block;
+  margin-bottom: var(--space-3);
+}
+
+.footer-brand p {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  max-width: 28ch;
+}
+
+/* Nav column */
+.footer-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.footer-nav a {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+}
+
+.footer-nav a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Contact column */
+.footer-contact-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: var(--space-2);
+}
+
+.footer-contact a {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.footer-contact a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Legal bar */
+.footer-legal {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-legal .container {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+.footer-legal p {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}
+
+/* ── Pricing-tier comparison grid ─────────────────────────────────────────── */
+/*
+ * Wraps PRICING.SNAPSHOT, PRICING.FOUNDATION_LITE, PRICING.FOUNDATION_STANDARD
+ * side-by-side. Built in [...slug].astro via buildDisplayGroups().
+ */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  align-items: start; /* allows the "Most Popular" badge to sit flush at top */
+}
+
+/* Remove the individual card's own bottom margin inside the grid */
+.pricing-grid .section { margin-bottom: 0; }
+
+/* Each pricing card is a flex column so the CTA button anchors to the bottom */
+.pricing-grid .section {
+  display: flex;
+  flex-direction: column;
+}
+.pricing-grid .section .field-cta {
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+/* Pricing-tier card hover lift */
+@media (prefers-reduced-motion: no-preference) {
+  .pricing-grid .section {
+    transition:
+      box-shadow var(--dur) var(--ease-out),
+      transform  var(--dur) var(--ease-out);
+  }
+  .pricing-grid .section:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+  /* Preserve the primary-ring on the recommended tier */
+  .pricing-grid .section-foundation_standard:hover {
+    box-shadow: var(--shadow-lg), 0 0 0 2px var(--color-primary-tint);
+  }
+}
+
+/* ── Services feature grid (SERVICES.WHAT_YOU_GET.LIST) ──────────────────── */
+/*
+ * Turns the plain <ul> in WHAT_YOU_GET.LIST into a 2-column icon grid.
+ * No content changes — only presentation layer.
+ */
+.section-what_you_get .field-list ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-4);
+}
+
+.section-what_you_get .field-list ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.section-what_you_get .field-list ul li::before {
+  content: '→';
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── ICP best-fit criteria (HOME.ICP.BEST_FIT) ────────────────────────────── */
+/* Pill chips so the short list items scan quickly */
+.section-icp .field-best_fit ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-3);
+}
+
+.section-icp .field-best_fit ul li {
+  background: var(--color-primary-tint);
+  border: 1px solid #c7dcff;
+  border-radius: 999px;
+  padding: var(--space-1) var(--space-4);
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+
+/* ── Ongoing tiers: TIER_1 / TIER_2 side-by-side (PRICING.ONGOING) ─────────── */
+/*
+ * TIER_1 and TIER_2 are level-2 fields (not subsections) so they can't use
+ * the card-grid mechanism. CSS grid on the section itself places them
+ * side-by-side while keeping TITLE and CTA full-width.
+ */
+.section-ongoing {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+/* Cancel the stacking margin — grid gap handles spacing */
+.section-ongoing .field + .field { margin-top: 0; }
+
+/* Full-width rows */
+.section-ongoing .field-title,
+.section-ongoing .field-cta { grid-column: 1 / -1; }
+
+@media (min-width: 580px) {
+  .section-ongoing { grid-template-columns: 1fr 1fr; }
+}
+
+/* Tier mini-cards */
+.section-ongoing .field-tier_1,
+.section-ongoing .field-tier_2 {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+
+/* First <p> in each tier is the tier name + price — give it prominence */
+.section-ongoing .field-tier_1 > p:first-child,
+.section-ongoing .field-tier_2 > p:first-child {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  margin-top: 0;
+}
+
+/* ── Testimonial cards (future: *.TESTIMONIALS.* block IDs) ──────────────── */
+/*
+ * No testimonials exist in /content yet. When a section like
+ * HOME.TESTIMONIALS (with subsections HOME.TESTIMONIALS.T1, T2, T3…) is added
+ * to a page file, its cards will automatically pick up this styling.
+ */
+.section-testimonials .cards {
+  gap: var(--space-6);
+}
+
+.section-testimonials .card {
+  background: var(--color-primary-tint);
+  border-color: #c7dcff;
+  border-left: 4px solid var(--color-primary);
+  padding-top: var(--space-8);
+  position: relative;
+}
+
+/* Opening quote mark */
+.section-testimonials .card::before {
+  content: '\201C';
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-5);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--color-primary);
+  font-family: Georgia, 'Times New Roman', serif;
+  opacity: 0.35;
+}
+
+/* Attribution / name line — pushed to card bottom via margin-top:auto on
+   .field-name / .field-attribution in the card's flex column */
+.section-testimonials .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-testimonials .field-name,
+.section-testimonials .field-attribution,
+.section-testimonials .field-author {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ── Scroll fade-in ───────────────────────────────────────────────────────── */
+/*
+ * JS in Base.astro adds [data-animate] to each .section, then adds
+ * .is-visible via IntersectionObserver when the element enters the viewport.
+ *
+ * To disable: remove the scroll-fade <script> from Base.astro.
+ *   Elements stay fully visible at all times (safe fallback).
+ * To re-enable: restore the script block.
+ *
+ * The script also checks prefers-reduced-motion before doing anything,
+ * so no transition fires for users who have requested reduced motion.
+ * This media query acts as a CSS-side safety net on top of that.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .section[data-animate] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity   400ms var(--ease-out),
+      transform 400ms var(--ease-out);
+  }
+
+  .section[data-animate].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

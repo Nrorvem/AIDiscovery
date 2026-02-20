@@ -1,0 +1,99 @@
+  ---
+  What was done
+
+  Files created (Astro scaffold only — /content untouched)
+
+  ┌───────────────────────────┬─────────────────────────────────────────────────────┐
+  │           File            │                       Purpose                       │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ package.json              │ Astro ^5.0.0 dependency, dev/build/preview scripts  │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ astro.config.mjs          │ Minimal Astro config (static output)                │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ tsconfig.json             │ Extends astro/tsconfigs/strict                      │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ .gitignore                │ Ignores node_modules/, dist/, .astro/               │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ src/lib/content.ts        │ Variables loader, block parser, HTML renderer       │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ src/layouts/Base.astro    │ HTML shell with <nav> and <slot />                  │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ src/components/Nav.astro  │ Renders nav links with active-state class           │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ src/pages/[...slug].astro │ Catch-all static route, groups blocks into sections │
+  ├───────────────────────────┼─────────────────────────────────────────────────────┤
+  │ src/styles/global.css     │ ~120 lines of minimal CSS                           │
+  └───────────────────────────┴─────────────────────────────────────────────────────┘
+
+  ---
+  Commands
+
+  # Install dependencies
+  npm install
+
+  # Start dev server (http://localhost:4321)
+  npm run dev
+
+  # Build to ./dist/
+  npm run build
+
+  # Preview the build
+  npm run preview
+
+  ---
+  How the content loader works
+
+  Variable substitution (src/lib/content.ts:loadVariables)
+  - Reads content/variables.md, matches lines of the form - KEY: value
+  - Applies a single-pass {{KEY}} → value replacement on all block bodies
+  - {{PHONE}} is unfilled in variables.md, so it renders literally as {{PHONE}}
+
+  Block parsing (parseBlocks)
+  - Headings that match ALL_CAPS.WITH_DOTS are structural block IDs — collected as { id, level, body }
+  - Level 1 (#) = section container; level 2–4 (##/###/####) = fields
+  - --- horizontal rules are skipped
+
+  Rendering (renderBlockBody + renderLines)
+  - HEADLINE/H1 suffix → <h2>; TITLE → <h3>; PRICE → <p class="price">
+  - CTA lines matching CTA: Label → URL / Button: Label → URL → <a class="btn">
+  - Bullet lines (- ) → <ul>; numbered lines (1./1)) → <ol>
+  - URLs in text are auto-linked; **bold** → <strong>
+
+  ---
+  Safety checks confirmed
+
+  - Talk about monthly management CTA → https://calendly.com/nrorvem ✓ (home + pricing)
+  - EMAIL → rudy.b@nrorvem.com ✓
+  - CALENDLY_LINK → https://calendly.com/nrorvem ✓
+  - All 51 block IDs in home.md and 26 in pricing.md are unchanged ✓
+  - /content directory not moved, renamed, or deleted ✓
+
+  ---
+  How to add a new page
+
+  1. Create /content/pages/my-page.md with frontmatter:
+  ---
+  slug: /my-page
+  page_id: MY_PAGE
+  title: My Page
+  ---
+
+  # MY_PAGE.HERO
+
+  ## MY_PAGE.HERO.HEADLINE
+  Your headline here
+
+  ## MY_PAGE.HERO.CTA
+  CTA: Book a call → {{CALENDLY_LINK}}
+  2. Run npm run build (or dev server auto-reloads)
+  3. The page appears at /my-page and is auto-added to the nav if it has a single-segment slug
+
+  ---
+  Assumptions & follow-ups
+
+  - {{PHONE}} has no value yet — it renders literally. Fill it in content/variables.md when ready.
+  - Styling is intentionally minimal. Let me know if you want a specific look.
+  - The case study page (/case-studies/demo) is excluded from the nav (nested slug), but is accessible directly.
+  - Astro telemetry is on by default; run npx astro telemetry disable to opt out.
+
+  ---
