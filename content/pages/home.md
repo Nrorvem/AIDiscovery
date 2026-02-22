@@ -10,8 +10,7 @@ title: Home
 Bay Area HVAC “AI Discovery” that turns your business into the obvious, verifiable choice
 
 ## HOME.HERO.SUBHEAD
-When homeowners ask AI assistants and search engines “Who does heat pumps near me?” the winners have one thing in common: clean, consistent business data + proof + service pages that answer real questions.  
-We build that foundation for Bay Area HVAC companies—fast.
+The HVAC companies AI recommends have clean data, consistent listings, and service pages that answer real questions. We build that for Bay Area HVAC teams — fast.
 
 ## HOME.HERO.CTA_PRIMARY
 Primary CTA: Get Snapshot → {{CALENDLY_LINK}}
@@ -23,27 +22,27 @@ Secondary CTA: View plans → /pricing
 
 # HOME.UNDER_HERO_BULLETS
 
-- More qualified calls (fewer “do you serve my area?” time-wasters)
-- Cleaner listings + fewer mismatched hours/services
-- Service pages + FAQs built for modern discovery and conversion
-- Structured data (Schema) so your site is machine-readable
+- More qualified calls, fewer wasted inquiries
+- Consistent listings across every platform
+- Service pages and FAQs built for AI discovery and conversion
+- Schema markup that makes your site machine-readable
 
 ---
 
 # HOME.PROBLEM
 
 ## HOME.PROBLEM.HEADLINE
-Most HVAC websites are invisible to “AI-style” discovery for simple reasons
+Why most HVAC websites are invisible to AI-style search
 
 ## HOME.PROBLEM.BULLETS
 - Service areas are vague (“Bay Area”) instead of precise (cities/ZIPs)
 - Core services aren’t clearly enumerated (heat pumps, ductless, furnace repair, IAQ)
 - Trust signals are buried (license/insurance/warranties/financing)
-- Listings disagree (hours/categories/services vary by platform)
-- No structured data, so machines must “guess”
+- Listings conflict across platforms (hours, categories, services)
+- No structured data — machines have to guess
 
 ## HOME.PROBLEM.RESULT
-Result: you may be great at HVAC, but your online “entity” looks uncertain—so you’re easier to skip.
+You do great work. But online, your business looks uncertain — so you get skipped.
 
 ---
 
@@ -53,15 +52,15 @@ Result: you may be great at HVAC, but your online “entity” looks uncertain�
 We build your HVAC “Service Graph” + Proof Layer
 
 ## HOME.MECHANISM.INTRO
-Think of it as local entity infrastructure:
+Six components, fully implemented:
 
 ## HOME.MECHANISM.STEPS
-1. A canonical service catalog
-2. Precise service area definition (cities + ZIPs)
+1. Canonical service catalog
+2. Precise service area (cities + ZIPs)
 3. Website upgrades (service pages + FAQs + proof)
 4. Structured data (Schema JSON-LD)
 5. Listings cleanup + ongoing monitoring
-6. Tracking so you can see what changed
+6. Tracking to measure impact
 
 ---
 
@@ -77,18 +76,18 @@ Best fit:
 - 5–30 techs (or growing)
 
 ## HOME.ICP.NOT_IDEAL
-Not ideal if you’re a brand-new company with no job history or proof assets yet.
+Not a fit if you have no job history or proof assets yet.
 
 ---
 
 # HOME.HOW_IT_WORKS
 
 ## HOME.HOW_IT_WORKS.HEADLINE
-How it works (simple 3-step)
+How it works
 
 ### HOME.HOW_IT_WORKS.STEP_1
-1) Snapshot (48 hours)  
-You get a 6–10 minute Loom showing how your business appears across your website, listings, and common AI-style questions—plus a prioritized fix list.
+1) Snapshot (48 hours)
+We audit your site, listings, and AI visibility. You get a 6–10 minute Loom walkthrough + prioritized fix list, delivered in 48 hours.
 
 ### HOME.HOW_IT_WORKS.STEP_2
 2) Foundation (7–10 business days)  
@@ -96,14 +95,14 @@ We implement the high-impact fixes: service catalog, service area precision, ser
 
 ### HOME.HOW_IT_WORKS.STEP_3
 3) Ongoing management (monthly)  
-We keep it fresh: new FAQs, job stories, page upgrades, listings monitoring, monthly reporting, and prompt-based checks.
+We keep it fresh: new FAQs, job stories, page upgrades, listings monitoring, monthly reporting, and AI prompt checks.
 
 ---
 
 # HOME.OFFERS
 
 ## HOME.OFFERS.HEADLINE
-Services / offers
+What we offer
 
 ### HOME.OFFERS.A
 
@@ -165,8 +164,8 @@ CTA: Book call → {{CALENDLY_LINK}}
 # HOME.SOCIAL_PROOF
 
 ## HOME.SOCIAL_PROOF.EARLY_STAGE_NOTE
-We’re currently onboarding our first Bay Area HVAC partners. If you want an “early mover” slot, request a Snapshot and we’ll tell you if you’re a fit.  
-(Replace with testimonials once available.)
+We’re onboarding our first Bay Area HVAC partners.
+Want an early-mover slot? Request a Snapshot and we’ll tell you if it’s a fit.
 
 ---
 
@@ -174,11 +173,11 @@ We’re currently onboarding our first Bay Area HVAC partners. If you want an �
 
 ## HOME.FAQ.Q1
 **Do you guarantee rankings or that AI will recommend us?**  
-No. We guarantee high-quality deliverables: clearer service pages, consistent listings, accurate structured data, and tracking. Recommendations/rankings depend on the market.
+No. We guarantee the deliverables: clearer service pages, consistent listings, accurate structured data, and tracking. Rankings depend on the market.
 
 ## HOME.FAQ.Q2
 **Do you work with WordPress/Wix/Squarespace/Webflow?**  
-Yes. We separate generation (pages/FAQs/schema) from deployment, so mixed stacks are fine.
+Yes. We create pages, FAQs, and schema separately from your CMS, so any stack works.
 
 ## HOME.FAQ.Q3
 **Will you touch our Google Business Profile?**  

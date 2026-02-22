@@ -10,7 +10,7 @@ title: Pricing
 Simple pricing for Bay Area HVAC AI Discovery
 
 ## PRICING.HEADER.SUBHEAD
-Pick a one-time Foundation, then add monthly management if you want ongoing momentum.
+One-time Foundation to establish your presence. Monthly management to keep growing.
 
 ---
 
@@ -36,7 +36,7 @@ CTA: Get Snapshot → {{CALENDLY_LINK}}
 # PRICING.FOUNDATION_LITE
 
 ## PRICING.FOUNDATION_LITE.TITLE
-Foundation Lite (high-volume, strict scope)
+Foundation Lite (defined scope)
 
 ## PRICING.FOUNDATION_LITE.PRICE
 $1,499 one-time (intro pricing for first ~5 clients)
@@ -112,7 +112,7 @@ Includes:
 - 2 job stories/month
 - 20 FAQs/month
 - Review velocity system setup + monitoring
-- Monthly “AI-style prompt check” (20 prompts) + adjustments
+- Monthly AI prompt check (20 queries) + adjustments
 
 ## PRICING.ONGOING.CTA
 CTA: Book call → {{CALENDLY_LINK}}

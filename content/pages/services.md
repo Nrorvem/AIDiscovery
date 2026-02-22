@@ -7,7 +7,7 @@ title: Services
 # SERVICES.WHAT_YOU_GET
 
 ## SERVICES.WHAT_YOU_GET.HEADLINE
-What you get (plain-English list)
+What you get
 
 ## SERVICES.WHAT_YOU_GET.LIST
 - Service Catalog: what you do (and don’t), by service type

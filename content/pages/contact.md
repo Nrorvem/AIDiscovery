@@ -29,4 +29,4 @@ What we need from you:
 
 - Primary service area (cities/ZIPs)
 - Top 5 services you want to win (heat pumps? ductless? furnace repair?)
-- Access to your website CMS (optional) and GBP (if you want us to implement)
+- CMS access (optional) + Google Business Profile access (if you want us to implement)
