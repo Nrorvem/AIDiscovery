@@ -9,6 +9,7 @@
  */
 
 import Card from './Card.astro';
+import SectionIcon from './SectionIcon.astro';
 import { renderBlockBody } from '../lib/content.ts';
 import type { Section as ContentSection } from '../lib/content.ts';
 
@@ -17,6 +18,9 @@ interface Props {
 }
 
 const { section } = Astro.props;
+
+// Fields that produce an h2 / top-level heading and receive an icon.
+const HEADING_FIELD_SUFFIXES = new Set(['headline', 'h1']);
 
 // Pre-compute visible subsection cards
 const visibleCards = section.subsections.filter(
@@ -29,11 +33,20 @@ const visibleCards = section.subsections.filter(
   <div class="field" set:html={renderBlockBody(section.body, section.id)} />
 )}
 
-{/* Level-2 direct fields: headline, subhead, intro, CTA, price, etc. */}
+{/* Level-2 direct fields: headline, subhead, intro, CTA, price, etc.
+    Heading fields (HEADLINE / H1) receive an inline section icon above them. */}
 {section.directFields.map(field => {
   const html = renderBlockBody(field.body, field.id);
   if (!html) return null;
   const fieldSuffix = (field.id.split('.').pop() ?? '').toLowerCase();
+  if (HEADING_FIELD_SUFFIXES.has(fieldSuffix)) {
+    return (
+      <div class={`field field-${fieldSuffix}`}>
+        <SectionIcon sectionId={section.id} />
+        <Fragment set:html={html} />
+      </div>
+    );
+  }
   return <div class={`field field-${fieldSuffix}`} set:html={html} />;
 })}
 

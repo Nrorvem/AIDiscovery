@@ -29,7 +29,7 @@ Includes:
 - Inconsistency screenshots
 
 ## PRICING.SNAPSHOT.CTA
-CTA: Request Snapshot → {{CALENDLY_LINK}}
+CTA: Get Snapshot → {{CALENDLY_LINK}}
 
 ---
 
@@ -62,7 +62,7 @@ Excludes:
 - Advanced PR/citation campaigns
 
 ## PRICING.FOUNDATION_LITE.CTA
-CTA: Book Foundation Lite → {{CALENDLY_LINK}}
+CTA: Book Lite → {{CALENDLY_LINK}}
 
 ---
 
@@ -86,7 +86,7 @@ Includes everything in Lite, plus:
 - Optional call tracking number (if you agree)
 
 ## PRICING.FOUNDATION_STANDARD.CTA
-CTA: Book Foundation Standard → {{CALENDLY_LINK}}
+CTA: Book Standard → {{CALENDLY_LINK}}
 
 ---
 
@@ -115,4 +115,4 @@ Includes:
 - Monthly “AI-style prompt check” (20 prompts) + adjustments
 
 ## PRICING.ONGOING.CTA
-CTA: Talk about monthly management → {{CALENDLY_LINK}}
+CTA: Book call → {{CALENDLY_LINK}}

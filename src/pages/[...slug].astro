@@ -76,34 +76,36 @@ const displayGroups = buildDisplayGroups(sections);
 ---
 
 <Base title={page.title} navPages={navPages}>
-  <div class="page-content">
-    {displayGroups.map(group => {
+  {displayGroups.map(group => {
 
-      // ── Pricing-tier comparison grid ─────────────────────────────────────
-      if (group.kind === 'pricing-grid') {
-        return (
+    // ── Pricing-tier comparison grid ───────────────────────────────────────
+    // Outer band uses Section (gets full-bleed + container).
+    // Inner tier panels use card mode (boxed, no inner container).
+    if (group.kind === 'pricing-grid') {
+      return (
+        <Section suffix="pricing_tiers">
           <div class="pricing-grid">
             {group.items.map(section => {
               const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
               return (
-                <Section id={section.id} suffix={suffix}>
+                <Section id={section.id} suffix={suffix} card>
                   <SectionBody section={section} />
                 </Section>
               );
             })}
           </div>
-        );
-      }
-
-      // ── Single section card ──────────────────────────────────────────────
-      const section = group.item;
-      const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
-      return (
-        <Section id={section.id} suffix={suffix}>
-          <SectionBody section={section} />
         </Section>
       );
+    }
 
-    })}
-  </div>
+    // ── Single full-bleed band ─────────────────────────────────────────────
+    const section = group.item;
+    const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
+    return (
+      <Section id={section.id} suffix={suffix}>
+        <SectionBody section={section} />
+      </Section>
+    );
+
+  })}
 </Base>

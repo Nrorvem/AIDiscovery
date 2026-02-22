@@ -1,7 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Container from '../components/Container.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -23,9 +22,7 @@ const { title, navPages } = Astro.props;
     <a href="#main-content" class="skip-link">Skip to content</a>
     <Nav pages={navPages} />
     <main id="main-content">
-      <Container>
-        <slot />
-      </Container>
+      <slot />
     </main>
     <Footer pages={navPages} />
 
@@ -47,7 +44,7 @@ const { title, navPages } = Astro.props;
           { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
         );
 
-        document.querySelectorAll<HTMLElement>('.section').forEach(el => {
+        document.querySelectorAll<HTMLElement>('main > .section').forEach(el => {
           el.setAttribute('data-animate', '');
           observer.observe(el);
         });

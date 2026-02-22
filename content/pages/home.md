@@ -14,10 +14,10 @@ When homeowners ask AI assistants and search engines “Who does heat pumps near
 We build that foundation for Bay Area HVAC companies—fast.
 
 ## HOME.HERO.CTA_PRIMARY
-Primary CTA: Get a free Snapshot → {{CALENDLY_LINK}}
+Primary CTA: Get Snapshot → {{CALENDLY_LINK}}
 
 ## HOME.HERO.CTA_SECONDARY
-Secondary CTA: See Foundation packages → /pricing
+Secondary CTA: View plans → /pricing
 
 ---
 
@@ -123,7 +123,7 @@ Includes:
 - 2–3 screenshots of inconsistencies (hours/services/service areas)
 
 #### HOME.OFFERS.A.CTA
-CTA: Get the Snapshot → {{CALENDLY_LINK}}
+CTA: Get Snapshot → {{CALENDLY_LINK}}
 
 ### HOME.OFFERS.B
 
@@ -143,7 +143,7 @@ Core deliverables:
 - Basic tracking + baseline report
 
 #### HOME.OFFERS.B.CTA
-CTA: See Foundation packages → /pricing
+CTA: View plans → /pricing
 
 ### HOME.OFFERS.C
 
@@ -158,7 +158,7 @@ We maintain accuracy and add proof over time:
 - Monthly reporting + action plan
 
 #### HOME.OFFERS.C.CTA
-CTA: Talk about monthly management → {{CALENDLY_LINK}}
+CTA: Book call → {{CALENDLY_LINK}}
 
 ---
 
@@ -195,7 +195,7 @@ Want the free Snapshot?
 Get a Loom video + prioritized checklist within 48 hours.
 
 ## HOME.FINAL_CTA.BUTTON
-Button: Get the Snapshot → {{CALENDLY_LINK}}
+Button: Get Snapshot → {{CALENDLY_LINK}}
 
 ## HOME.FINAL_CTA.FALLBACK
 Or email: {{EMAIL}}

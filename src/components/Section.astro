@@ -1,29 +1,32 @@
 ---
 /**
  * Section
- * A padded, card-style <section> block that participates in the design system.
+ * Full-bleed band <section> with an inner .container for content.
  *
  * Props:
- *   id     – passed through as the HTML id (used for scroll-to and CSS targeting)
+ *   id     – passed through as the HTML id (scroll-to / CSS targeting)
  *   suffix – last segment of the block ID in lowercase, e.g. "hero", "final_cta"
  *            Becomes the class "section-{suffix}" so global.css variants apply.
+ *   card   – when true, renders as a boxed card (no inner container).
+ *            Used for pricing-tier panels nested inside a band.
  *
  * Usage:
- *   <Section id="HOME.HERO" suffix="hero">…</Section>
- *   <Section>…</Section>   ← no variant, just the base .section card style
+ *   <Section id="HOME.HERO" suffix="hero">…</Section>          ← full-bleed band
+ *   <Section id="PRICING.SNAPSHOT" suffix="snapshot" card>…</Section>  ← card box
  */
 
 interface Props {
   id?: string;
   suffix?: string;
+  card?: boolean;
 }
 
-const { id, suffix } = Astro.props;
+const { id, suffix, card = false } = Astro.props;
 ---
 
 <section
   id={id}
-  class:list={['section', suffix && `section-${suffix}`]}
+  class:list={['section', suffix && `section-${suffix}`, card && 'section--card']}
 >
-  <slot />
+  {card ? <slot /> : <div class="container"><slot /></div>}
 </section>

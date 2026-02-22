@@ -127,4 +127,4 @@ Want this for your HVAC company?
 Get a free Snapshot and we’ll show you the exact gaps holding back your visibility.
 
 ## CASE_STUDY_DEMO.CTA.BUTTON
-Button: Get the Snapshot → {{CALENDLY_LINK}}
+Button: Get Snapshot → {{CALENDLY_LINK}}

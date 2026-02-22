@@ -1,0 +1,138 @@
+---
+/**
+ * SectionIcon
+ * Deterministic, decorative inline SVG icon keyed to a section's block-ID
+ * category (the last dot-segment of the section ID).
+ *
+ * Always aria-hidden — purely decorative, never carries unique information.
+ *
+ * Usage:
+ *   <SectionIcon sectionId="HOME.OFFERS" />   → shield-check icon
+ *   <SectionIcon sectionId="PRICING.HEADER" /> → package icon
+ *
+ * Keyword → icon mapping:
+ *   HERO                             → search       (discovery/visibility)
+ *   PROBLEM                          → alert        (warning triangle)
+ *   MECHANISM, HOW_IT_WORKS          → layers       (stacked infrastructure)
+ *   ICP                              → crosshair    (target customer)
+ *   OFFERS, WHAT_YOU_GET             → shield-check (trust/deliverables)
+ *   SOCIAL_PROOF                     → trending-up  (results/growth)
+ *   FAQ                              → help-circle  (question)
+ *   FINAL_CTA                        → arrow-circle (call to action)
+ *   HEADER, SNAPSHOT, FOUNDATION_*  → package      (bundle/deliverable)
+ *   ONGOING                          → dollar-sign  (monthly/pricing)
+ *   (anything else)                  → zap          (default fallback)
+ */
+
+interface Props {
+  sectionId: string;
+}
+
+const { sectionId } = Astro.props;
+
+// Last segment of the block ID drives icon selection.
+const category = sectionId.split('.').pop() ?? '';
+
+// Feather Icons-style paths (MIT). viewBox="0 0 24 24", stroke-based.
+const ICONS: Record<string, string> = {
+  search: [
+    '<circle cx="11" cy="11" r="8"/>',
+    '<line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  ].join(''),
+
+  alert: [
+    '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>',
+    '<line x1="12" y1="9" x2="12" y2="13"/>',
+    '<line x1="12" y1="17" x2="12.01" y2="17"/>',
+  ].join(''),
+
+  layers: [
+    '<polygon points="12 2 2 7 12 12 22 7 12 2"/>',
+    '<polyline points="2 17 12 22 22 17"/>',
+    '<polyline points="2 12 12 17 22 12"/>',
+  ].join(''),
+
+  crosshair: [
+    '<circle cx="12" cy="12" r="10"/>',
+    '<line x1="22" y1="12" x2="18" y2="12"/>',
+    '<line x1="6"  y1="12" x2="2"  y2="12"/>',
+    '<line x1="12" y1="6"  x2="12" y2="2"/>',
+    '<line x1="12" y1="22" x2="12" y2="18"/>',
+  ].join(''),
+
+  'shield-check': [
+    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    '<polyline points="9 12 11 14 15 10"/>',
+  ].join(''),
+
+  'trending-up': [
+    '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>',
+    '<polyline points="17 6 23 6 23 12"/>',
+  ].join(''),
+
+  'help-circle': [
+    '<circle cx="12" cy="12" r="10"/>',
+    '<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>',
+    '<line x1="12" y1="17" x2="12.01" y2="17"/>',
+  ].join(''),
+
+  'arrow-circle': [
+    '<circle cx="12" cy="12" r="10"/>',
+    '<polyline points="12 8 16 12 12 16"/>',
+    '<line x1="8" y1="12" x2="16" y2="12"/>',
+  ].join(''),
+
+  package: [
+    '<line x1="16.5" y1="9.4" x2="7.55" y2="4.24"/>',
+    '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>',
+    '<polyline points="3.27 6.96 12 12.01 20.73 6.96"/>',
+    '<line x1="12" y1="22.08" x2="12" y2="12"/>',
+  ].join(''),
+
+  'dollar-sign': [
+    '<line x1="12" y1="1" x2="12" y2="23"/>',
+    '<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  ].join(''),
+
+  zap: [
+    '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  ].join(''),
+};
+
+const KEY_MAP: Record<string, string> = {
+  HERO:                'search',
+  PROBLEM:             'alert',
+  MECHANISM:           'layers',
+  HOW_IT_WORKS:        'layers',
+  ICP:                 'crosshair',
+  OFFERS:              'shield-check',
+  WHAT_YOU_GET:        'shield-check',
+  SOCIAL_PROOF:        'trending-up',
+  FAQ:                 'help-circle',
+  FINAL_CTA:           'arrow-circle',
+  HEADER:              'package',
+  SNAPSHOT:            'package',
+  FOUNDATION_LITE:     'package',
+  FOUNDATION_STANDARD: 'package',
+  ONGOING:             'dollar-sign',
+};
+
+const iconKey = KEY_MAP[category] ?? 'zap';
+const paths   = ICONS[iconKey] ?? ICONS['zap'];
+---
+
+<svg
+  class="section-icon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="20"
+  height="20"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={paths}
+/>
