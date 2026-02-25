@@ -13,7 +13,7 @@
 
 ## Contact
 - EMAIL: rudy.b@nrorvem.com
-- PHONE: {{PHONE}}
+- PHONE: (510) 239-3422
 
 ## Geo / positioning strings
 - REGION_SHORT: Bay Area
