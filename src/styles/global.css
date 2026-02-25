@@ -14,6 +14,9 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* ── Utility: screen-reader-only text ─────────────────────────────────────── */
@@ -102,6 +105,14 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-4);
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Center desktop nav links between logo and CTA */
+nav[aria-label="Primary navigation"] {
+  margin-right: auto;
+  margin-left: var(--space-8);
 }
 
 /* Desktop CTA — hidden below the mobile breakpoint */
@@ -174,12 +185,12 @@ body {
 }
 
 /* ── Main content ─────────────────────────────────────────────────────────── */
-main { display: block; }  /* full-bleed: sections handle their own spacing */
+main { flex: 1; }  /* full-bleed: sections handle their own spacing */
 
 /* ── Section base — full-bleed band ──────────────────────────────────────── */
 .section {
   width: 100%;
-  padding-block: clamp(var(--space-10), 4vw, var(--space-16));
+  padding-block: clamp(3rem, 6vw, 6rem);
   background: var(--color-surface);
 }
 
@@ -203,27 +214,44 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .section-hero {
-  background: linear-gradient(140deg, var(--color-primary-tint) 0%, #fff 65%);
-  padding-block: var(--space-16);
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, var(--color-primary-tint) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, #e0eaff 0%, transparent 60%),
+    var(--color-surface);
+  padding-top: clamp(3rem, 8vw, 8rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+  position: relative;
+  overflow: hidden;
 }
 
-@media (max-width: 680px) {
-  .section-hero { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+/* Subtle dot-grid texture */
+.section-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
 }
 
 .section-hero .field-headline h2 {
-  font-size: var(--text-h1);
+  font-size: var(--text-display);
   font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.035em;
-  max-width: 22ch;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  max-width: 20ch;
+  background: linear-gradient(135deg, var(--color-text) 40%, var(--color-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .section-hero .field-subhead p {
-  font-size: 1.075rem;
+  font-size: 1.15rem;
   color: var(--color-muted);
   max-width: 56ch;
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
+  line-height: 1.65;
 }
 
 /* Hero CTA row */
@@ -290,10 +318,15 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 .section-final_cta .btn:hover { background: var(--color-primary-tint); }
 
 .section-final_cta .field-fallback p,
-.section-final_cta .field-fallback a {
+.section-final_cta .field-fallback a,
+.section-final_cta .field-fallback a:not(.btn) {
   color: rgba(255,255,255,0.65);
   font-size: var(--text-sm);
   margin-top: var(--space-3);
+}
+.section-final_cta .field-fallback a:hover,
+.section-final_cta .field-fallback a:not(.btn):hover {
+  color: #fff;
 }
 
 /* ── Notice / warning section ─────────────────────────────────────────────── */
@@ -316,8 +349,9 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
   border-radius: var(--radius-md);
-  padding: var(--space-6);
+  padding: var(--space-8) var(--space-6);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -392,27 +426,82 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
   border-radius: var(--radius-sm);
 }
 
-/* ── Section icons ────────────────────────────────────────────────────────── */
+/* ── Section labels (logo + text indicator) ──────────────────────────────── */
 /*
  * Rendered by SectionIcon.astro inside .field-headline / .field-h1.
- * Displayed as a block above the section heading (h2) — acts as a visual
- * anchor that aids scannability without intruding on the heading text itself.
- * All icons are aria-hidden (decorative).
+ * Displays a small branded logo mark + uppercase label above the section
+ * heading (h2). All labels are aria-hidden (decorative).
  */
-.section-icon {
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin-bottom: var(--space-3);
-  color: var(--color-primary);
-  opacity: 0.55;
-  flex-shrink: 0;
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
-/* On solid-color sections, switch icon to a tinted white */
-.section-final_cta .section-icon { color: #fff; opacity: 0.65; }
-/* On notice (amber background), use the accent color */
-.section-notice .section-icon { color: var(--color-accent); opacity: 0.8; }
+.section-label__logo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.section-label__text {
+  font-size: 1.5rem;            /* 24px */
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+/* White variant for final CTA / dark sections */
+.section-final_cta .section-label__logo,
+.section-final_cta .section-label__text { color: rgba(255,255,255,0.85); }
+/* Accent variant for notice sections */
+.section-notice .section-label__logo,
+.section-notice .section-label__text { color: var(--color-accent); }
+
+/* ── Hero two-column layout ───────────────────────────────────────────────── */
+.hero-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+.hero-visual { display: none; }
+.hero-illustration { width: 100%; height: auto; }
+
+@media (min-width: 780px) {
+  .hero-columns { grid-template-columns: 1fr 1fr; }
+  .hero-visual { display: block; }
+}
+
+/* ── Section heading centering (non-hero, non-chip sections) ─────────────── */
+.section:not(.section-hero):not(.section-under_hero_bullets) .field-headline,
+.section:not(.section-hero):not(.section-under_hero_bullets) .field-h1,
+.section:not(.section-hero):not(.section-under_hero_bullets) .field-subhead { text-align: center; }
+
+.section:not(.section-hero) .field-headline h2,
+.section:not(.section-hero) .field-h1 h2 { max-width: none; }
+
+.section:not(.section-hero) .field-subhead p { margin-inline: auto; }
+/* Center labels in non-hero sections */
+.section:not(.section-hero):not(.section-under_hero_bullets) .section-label {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Revert centering for card panels (pricing tiers, individual offer cards) */
+.section--card .field-headline,
+.section--card .field-h1,
+.section--card .field-subhead { text-align: left; margin-inline: 0; }
+
+/* Left-align label in card panels */
+.section--card .section-label {
+  justify-content: flex-start;
+  width: auto;
+}
 
 /* ── Typography within fields ─────────────────────────────────────────────── */
 .field + .field { margin-top: var(--space-4); }
@@ -460,12 +549,14 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 /* ── Price / Timeline ─────────────────────────────────────────────────────── */
 .field-price .price {
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--color-text);
   margin-top: var(--space-1);
 }
+
+.pricing-grid .field-price .price { font-size: 1.35rem; }
 
 .field-timeline .timeline {
   font-size: var(--text-sm);
@@ -475,18 +566,35 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 /* ── Buttons / CTAs ───────────────────────────────────────────────────────── */
 .btn {
   display: inline-block;
-  padding: 0.625rem 1.375rem;
-  background: var(--color-primary);
+  padding: 0.75rem 1.625rem;
+  background: linear-gradient(180deg, #3b82f6 0%, var(--color-primary) 100%);
   color: #fff;
-  font-size: var(--text-sm);
+  font-size: 0.9375rem; /* 15px */
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
   border-radius: var(--radius-md);
   border: 2px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), var(--shadow-sm);
   cursor: pointer;
   margin-top: var(--space-3);
   margin-right: var(--space-2);
+}
+
+/* Hero + final CTA: even larger buttons */
+.section-hero .btn,
+.section-final_cta .btn {
+  padding: 0.875rem 2.25rem;
+  font-size: 1rem;
+}
+
+/* Nav/drawer CTAs must never inherit .btn margin-top (source-order override) */
+.nav-cta.btn, .drawer-cta.btn { margin-top: 0; }
+.nav-cta.btn {
+  padding: 0.65rem 1.25rem;
+  font-size: var(--text-body);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Secondary CTA: outline style — applied by context (.field-cta_secondary)
@@ -536,7 +644,7 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 .site-footer {
   background: #0d1120;
   color: rgba(255,255,255,0.7);
-  margin-top: var(--space-10);
+  flex-shrink: 0;
 }
 
 .footer-grid {
@@ -625,7 +733,7 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--space-5);
-  align-items: start; /* allows the "Most Popular" badge to sit flush at top */
+  align-items: stretch; /* equal-height cards; badge still uses position:absolute */
 }
 
 /* Each pricing card is a flex column so the CTA button anchors to the bottom */
@@ -683,11 +791,51 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
 }
 
 .section-what_you_get .field-list ul li::before {
-  content: '→';
-  color: var(--color-primary);
-  font-weight: 700;
+  content: '';
+  display: block;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
+  background: var(--color-primary);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Per-item Feather-style icons via CSS mask */
+/* 1: Service Catalog → layers */
+.section-what_you_get .field-list ul li:nth-child(1)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E");
+}
+/* 2: Service Area Precision → map-pin */
+.section-what_you_get .field-list ul li:nth-child(2)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+}
+/* 3: Website Upgrades → edit */
+.section-what_you_get .field-list ul li:nth-child(3)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/%3E%3Cpath d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/%3E%3Cpath d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'/%3E%3C/svg%3E");
+}
+/* 4: Schema Markup → code */
+.section-what_you_get .field-list ul li:nth-child(4)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E");
+}
+/* 5: Listings Cleanup → list */
+.section-what_you_get .field-list ul li:nth-child(5)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='8' y1='6' x2='21' y2='6'/%3E%3Cline x1='8' y1='12' x2='21' y2='12'/%3E%3Cline x1='8' y1='18' x2='21' y2='18'/%3E%3Cline x1='3' y1='6' x2='3.01' y2='6'/%3E%3Cline x1='3' y1='12' x2='3.01' y2='12'/%3E%3Cline x1='3' y1='18' x2='3.01' y2='18'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='8' y1='6' x2='21' y2='6'/%3E%3Cline x1='8' y1='12' x2='21' y2='12'/%3E%3Cline x1='8' y1='18' x2='21' y2='18'/%3E%3Cline x1='3' y1='6' x2='3.01' y2='6'/%3E%3Cline x1='3' y1='12' x2='3.01' y2='12'/%3E%3Cline x1='3' y1='18' x2='3.01' y2='18'/%3E%3C/svg%3E");
+}
+/* 6: Tracking → bar-chart */
+.section-what_you_get .field-list ul li:nth-child(6)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E");
 }
 
 /* ── ICP best-fit criteria (HOME.ICP.BEST_FIT) ────────────────────────────── */
@@ -828,4 +976,185 @@ main { display: block; }  /* full-bleed: sections handle their own spacing */
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ── HOW_IT_WORKS step flow ───────────────────────────────────────────────── */
+.section-how_it_works .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  counter-reset: step;
+  margin-top: var(--space-6);
+}
+
+.section-how_it_works .card {
+  counter-increment: step;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-5);
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+}
+
+.section-how_it_works .card:last-child { border-bottom: none; }
+
+.section-how_it_works .card::before {
+  content: counter(step);
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .section-how_it_works .card:hover { transform: none; box-shadow: none; }
+}
+
+@media (min-width: 680px) {
+  .section-how_it_works .cards {
+    flex-direction: row;
+    gap: var(--space-4);
+  }
+  .section-how_it_works .card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border);
+    padding: var(--space-5);
+  }
+  .section-how_it_works .card:last-child { border-right: none; }
+}
+
+/* ── Disclosure widget (INCLUDES_DETAIL) ─────────────────────────────────── */
+.field-includes_detail details {
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+
+.field-includes_detail summary {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.field-includes_detail summary::-webkit-details-marker { display: none; }
+
+.field-includes_detail summary::after {
+  content: '›';
+  font-size: 1.1em;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.field-includes_detail details[open] summary::after { transform: rotate(90deg); }
+.field-includes_detail details[open] { padding-bottom: var(--space-2); }
+.field-includes_detail details ul { margin-top: var(--space-2); }
+.field-includes_detail details li { font-size: var(--text-sm); color: var(--color-muted); }
+
+/* ── Mechanism section dot-grid background ───────────────────────────────── */
+.section-mechanism {
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: var(--color-bg);
+}
+
+/* ── Heading underline accent ──────────────────────────────────────────── */
+/* Decorative blue bar under centered section headings */
+.section:not(.section-hero):not(.section-under_hero_bullets):not(.section-final_cta):not(.section-notice) .field-headline h2::after,
+.section:not(.section-hero):not(.section-under_hero_bullets):not(.section-final_cta):not(.section-notice) .field-h1 h2::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 3px;
+  background: var(--color-primary);
+  margin: var(--space-3) auto 0;
+  border-radius: 2px;
+}
+
+/* Left-align the bar inside cards */
+.section--card .field-headline h2::after,
+.section--card .field-h1 h2::after { margin-left: 0; margin-right: auto; }
+
+/* ── Recommended pricing tier gradient band ────────────────────────────── */
+
+/* ── Contact page styling ──────────────────────────────────────────────── */
+.section-details {
+  text-align: center;
+}
+
+.section-details .field > ul {
+  list-style: none;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-8);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-what_we_need .field > ul {
+  list-style: none;
+  padding: 0;
+  background: var(--color-primary-tint);
+  border: 1px solid #c7dcff;
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+.section-what_we_need .field > ul li {
+  padding-left: var(--space-6);
+  position: relative;
+  margin-top: var(--space-2);
+}
+
+.section-what_we_need .field > ul li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+/* ── Staggered card fade-in ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .card[data-card-index] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity   350ms var(--ease-out),
+      transform 350ms var(--ease-out);
+  }
+
+  .is-visible .card[data-card-index] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .is-visible .card[data-card-index="1"] { transition-delay: 80ms; }
+  .is-visible .card[data-card-index="2"] { transition-delay: 160ms; }
+  .is-visible .card[data-card-index="3"] { transition-delay: 240ms; }
+  .is-visible .card[data-card-index="4"] { transition-delay: 320ms; }
+  .is-visible .card[data-card-index="5"] { transition-delay: 400ms; }
 }

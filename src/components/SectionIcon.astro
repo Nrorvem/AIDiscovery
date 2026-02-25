@@ -1,27 +1,14 @@
 ---
 /**
  * SectionIcon
- * Deterministic, decorative inline SVG icon keyed to a section's block-ID
- * category (the last dot-segment of the section ID).
+ * Branded section label: inline logo SVG + short uppercase text.
  *
  * Always aria-hidden — purely decorative, never carries unique information.
+ * Returns nothing for sections that should have no label (CTAs, pricing cards, etc.).
  *
  * Usage:
- *   <SectionIcon sectionId="HOME.OFFERS" />   → shield-check icon
- *   <SectionIcon sectionId="PRICING.HEADER" /> → package icon
- *
- * Keyword → icon mapping:
- *   HERO                             → search       (discovery/visibility)
- *   PROBLEM                          → alert        (warning triangle)
- *   MECHANISM, HOW_IT_WORKS          → layers       (stacked infrastructure)
- *   ICP                              → crosshair    (target customer)
- *   OFFERS, WHAT_YOU_GET             → shield-check (trust/deliverables)
- *   SOCIAL_PROOF                     → trending-up  (results/growth)
- *   FAQ                              → help-circle  (question)
- *   FINAL_CTA                        → arrow-circle (call to action)
- *   HEADER, SNAPSHOT, FOUNDATION_*  → package      (bundle/deliverable)
- *   ONGOING                          → dollar-sign  (monthly/pricing)
- *   (anything else)                  → zap          (default fallback)
+ *   <SectionIcon sectionId="HOME.PROBLEM" />  → logo + "THE PROBLEM"
+ *   <SectionIcon sectionId="HOME.FINAL_CTA" /> → (nothing)
  */
 
 interface Props {
@@ -30,109 +17,53 @@ interface Props {
 
 const { sectionId } = Astro.props;
 
-// Last segment of the block ID drives icon selection.
-const category = sectionId.split('.').pop() ?? '';
-
-// Feather Icons-style paths (MIT). viewBox="0 0 24 24", stroke-based.
-const ICONS: Record<string, string> = {
-  search: [
-    '<circle cx="11" cy="11" r="8"/>',
-    '<line x1="21" y1="21" x2="16.65" y2="16.65"/>',
-  ].join(''),
-
-  alert: [
-    '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>',
-    '<line x1="12" y1="9" x2="12" y2="13"/>',
-    '<line x1="12" y1="17" x2="12.01" y2="17"/>',
-  ].join(''),
-
-  layers: [
-    '<polygon points="12 2 2 7 12 12 22 7 12 2"/>',
-    '<polyline points="2 17 12 22 22 17"/>',
-    '<polyline points="2 12 12 17 22 12"/>',
-  ].join(''),
-
-  crosshair: [
-    '<circle cx="12" cy="12" r="10"/>',
-    '<line x1="22" y1="12" x2="18" y2="12"/>',
-    '<line x1="6"  y1="12" x2="2"  y2="12"/>',
-    '<line x1="12" y1="6"  x2="12" y2="2"/>',
-    '<line x1="12" y1="22" x2="12" y2="18"/>',
-  ].join(''),
-
-  'shield-check': [
-    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-    '<polyline points="9 12 11 14 15 10"/>',
-  ].join(''),
-
-  'trending-up': [
-    '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>',
-    '<polyline points="17 6 23 6 23 12"/>',
-  ].join(''),
-
-  'help-circle': [
-    '<circle cx="12" cy="12" r="10"/>',
-    '<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>',
-    '<line x1="12" y1="17" x2="12.01" y2="17"/>',
-  ].join(''),
-
-  'arrow-circle': [
-    '<circle cx="12" cy="12" r="10"/>',
-    '<polyline points="12 8 16 12 12 16"/>',
-    '<line x1="8" y1="12" x2="16" y2="12"/>',
-  ].join(''),
-
-  package: [
-    '<line x1="16.5" y1="9.4" x2="7.55" y2="4.24"/>',
-    '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>',
-    '<polyline points="3.27 6.96 12 12.01 20.73 6.96"/>',
-    '<line x1="12" y1="22.08" x2="12" y2="12"/>',
-  ].join(''),
-
-  'dollar-sign': [
-    '<line x1="12" y1="1" x2="12" y2="23"/>',
-    '<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-  ].join(''),
-
-  zap: [
-    '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-  ].join(''),
+// Full section ID → label (primary lookup)
+const LABEL_MAP: Record<string, string | null> = {
+  'HOME.HERO':                       'DISCOVERY',
+  'HOME.PROBLEM':                    'THE PROBLEM',
+  'HOME.MECHANISM':                  'OUR APPROACH',
+  'HOME.ICP':                        'BEST FIT',
+  'HOME.HOW_IT_WORKS':               'PROCESS',
+  'HOME.OFFERS':                     'PACKAGES',
+  'HOME.FAQ':                        'Q&A',
+  'HOME.FINAL_CTA':                  null,
+  'PRICING.HEADER':                  'PRICING',
+  'PRICING.SNAPSHOT':                null,
+  'PRICING.FOUNDATION_LITE':         null,
+  'PRICING.FOUNDATION_STANDARD':     null,
+  'SERVICES.WHAT_YOU_GET':           'SERVICES',
+  'SERVICES.PROCESS':                'PROCESS',
+  'SERVICES.CTA':                    null,
+  'CONTACT.HEADER':                  'CONTACT',
+  'CONTACT.WHAT_WE_NEED':           'GETTING STARTED',
+  'CASE_STUDY_DEMO.STARTING_POINT':  'BEFORE',
+  'CASE_STUDY_DEMO.FOUNDATION':      'THE BUILD',
+  'CASE_STUDY_DEMO.ARTIFACTS':       'DELIVERABLES',
+  'CASE_STUDY_DEMO.RESULTS':         'RESULTS',
+  'CASE_STUDY_DEMO.CTA':             null,
 };
 
-const KEY_MAP: Record<string, string> = {
-  HERO:                'search',
-  PROBLEM:             'alert',
-  MECHANISM:           'layers',
-  HOW_IT_WORKS:        'layers',
-  ICP:                 'crosshair',
-  OFFERS:              'shield-check',
-  WHAT_YOU_GET:        'shield-check',
-  SOCIAL_PROOF:        'trending-up',
-  FAQ:                 'help-circle',
-  FINAL_CTA:           'arrow-circle',
-  HEADER:              'package',
-  SNAPSHOT:            'package',
-  FOUNDATION_LITE:     'package',
-  FOUNDATION_STANDARD: 'package',
-  ONGOING:             'dollar-sign',
+// Suffix fallback for unambiguous keys not in the full-ID map
+const SUFFIX_FALLBACK: Record<string, string | null> = {
+  'FINAL_CTA': null,
+  'CTA':       null,
 };
 
-const iconKey = KEY_MAP[category] ?? 'zap';
-const paths   = ICONS[iconKey] ?? ICONS['zap'];
+function getLabel(id: string): string | null {
+  if (id in LABEL_MAP) return LABEL_MAP[id];
+  const suffix = id.split('.').pop() ?? '';
+  if (suffix in SUFFIX_FALLBACK) return SUFFIX_FALLBACK[suffix];
+  return null;
+}
+
+const label = getLabel(sectionId);
 ---
 
-<svg
-  class="section-icon"
-  xmlns="http://www.w3.org/2000/svg"
-  width="20"
-  height="20"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="1.75"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  aria-hidden="true"
-  focusable="false"
-  set:html={paths}
-/>
+{label && (
+  <div class="section-label" aria-hidden="true">
+    <svg class="section-label__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 768" fill="currentColor" width="32" height="32">
+      <path d="M489.16 0Q498.96 2.36 499.16 11.63Q499.3 18.54 499.32 26.8A2.88 2.84-73 0 0 500.54 29.13C517.87 41.18 534.9 54 549.01 63.74C561.37 72.28 570.42 79.28 584.98 89.64Q592.49 95 607.08 105.55Q612.79 109.69 614.07 112.34Q616.87 118.13 614.01 124.26C610.21 132.37 601.75 130.78 594.38 130.78A.58.58 0 0 0 593.8 131.36L593.8 218.07A.79.79 0 0 0 594.59 218.86Q611.21 218.93 631.02 219.08Q640.11 219.15 643.5 226.15Q644.9 229.05 644.89 235.62Q644.82 281.36 644.96 289.39Q645.07 295.88 644.03 298.22Q641.8 303.24 638.67 305.21C631.26 309.86 625.66 313.43 620.92 320.22C611.95 333.05 613.23 348.76 614.89 364.43Q619.05 403.64 647.51 679.16Q649.13 694.82 651.41 701.54C658.26 721.75 674.76 736 695.38 741.06C703.17 742.98 711.86 743 723.99 743.82Q814.58 749.91 916.5 761.73Q930.64 763.37 957.02 766.61Q957.58 766.68 963.46 767.38L958.79 768L12.03 768Q9.22 767.82 6.5 767.39Q6.45 767.38 6.39 767.38C9.48 767.38 12.21 766.91 13.74 766.72Q142.1 750.76 267.75 742.76C297.01 740.9 320.51 719.64 324.71 690.5Q325.79 683.01 327.45 666.75Q333.25 609.82 356.05 391.01Q358.26 369.77 359.61 355.13C360.97 340.43 358.85 324.64 348.07 314.19Q344.6 310.82 336.99 306.53Q332.13 303.79 329.85 298.72Q328.56 295.84 328.57 288.11Q328.61 238.91 328.59 238.27Q328.25 229.16 330.07 226.08C334.07 219.31 338.69 218.65 346.85 218.83Q357.83 219.07 378.97 218.87A.71.7-.4 0 0 379.67 218.17L379.67 131.47A.68.68 0 0 0 378.98 130.79C374.99 130.84 368.48 131.61 365.2 129.91C357.8 126.06 355.53 115.9 361.5 109.7C364.05 107.05 367.17 105.3 370.65 102.79Q415.91 70.08 473.67 28.79A1.57 1.56 72.8 0 0 474.33 27.53Q474.44 20.63 474.27 13.51Q474 2.78 484.16 0L489.16 0ZM517.05 105.6A.34.34 0 0 0 517.35 105.79L563.75 105.79A.34.34 0 0 0 563.95 105.17L493.07 54.04A.34.34 0 0 0 492.57 54.46L517.05 105.6ZM439.91 131.16A.37.37 0 0 0 439.54 130.79L405.2 130.79A.37.37 0 0 0 404.83 131.16L404.83 218.68A.37.37 0 0 0 405.2 219.05L439.54 219.05A.37.37 0 0 0 439.91 218.68L439.91 131.16ZM508.76 131.4A.66.66 0 0 0 508.1 130.74L465.58 130.74A.66.66 0 0 0 464.92 131.4L464.92 218.44A.66.66 0 0 0 465.58 219.1L508.1 219.1A.66.66 0 0 0 508.76 218.44L508.76 131.4ZM568.72 131.2A.47.47 0 0 0 568.25 130.73L534.07 130.73A.47.47 0 0 0 533.6 131.2L533.6 218.54A.47.47 0 0 0 534.07 219.01L568.25 219.01A.47.47 0 0 0 568.72 218.54L568.72 131.2ZM379.69 244.57A.41.41 0 0 0 379.28 244.16L354.18 244.16A.41.41 0 0 0 353.77 244.57L353.77 281.37A.41.41 0 0 0 354.18 281.78L379.28 281.78A.41.41 0 0 0 379.69 281.37L379.69 244.57ZM568.72 244.54A.41.41 0 0 0 568.31 244.13L517.75 244.13A.41.41 0 0 0 517.34 244.54L517.34 281.42A.41.41 0 0 0 517.75 281.83L568.31 281.83A.41.41 0 0 0 568.72 281.42L568.72 244.54ZM619.78 244.69A.51.51 0 0 0 619.27 244.18L594.35 244.18A.51.51 0 0 0 593.84 244.69L593.84 281.25A.51.51 0 0 0 594.35 281.76L619.27 281.76A.51.51 0 0 0 619.78 281.25L619.78 244.69ZM587.67 319.73C562.87 320.32 537.69 324.49 514.88 331.95C480.74 343.11 448.89 363.39 428.37 392.62C408.84 420.43 398.35 452.73 394.13 486.29Q392.47 499.5 391.14 514.24A.38.38 0 0 0 391.82 514.5Q397.9 506.69 405.15 499.64Q420.68 484.55 439.39 472.14Q456.02 461.11 461.86 457.85C491.54 441.27 517.93 426.06 542.74 405.01C549.54 399.24 555.8 392.53 561.51 385.76C570.18 375.47 577.06 364.07 581.4 350.86Q586.32 335.85 587.98 320.06A.3.3 0 0 0 587.67 319.73ZM594.31 436.1A.2.2 0 0 0 593.94 436.09C585.94 455.8 573.98 472.17 557.73 487.42C551.36 493.39 544.47 499.33 537.45 504.21Q525.45 512.55 507.54 523.79C479.12 541.63 454.23 561.47 435.96 587.44Q415.2 616.93 410.92 653.18Q407.76 679.82 416.37 708.69C419.5 719.18 425.61 729.16 432.29 736.83A2.58 2.58 0 0 0 434.29 737.73L498.8 737.08A.31.3 90 0 0 499.1 736.77Q499.18 685.92 499.1 652.54C499.04 628.85 520.32 613.29 542.87 620.14C555.65 624.03 564.94 636.34 565.63 649.76Q565.69 650.95 565.69 737.26A.46.45 1.3 0 0 566.13 737.71L623.95 739.3A.48.48 0 0 0 624.44 738.77Q616.9 664.16 610.36 595.22Q609.12 582.15 595.06 439.8Q594.85 437.65 594.31 436.1Z"/>
+    </svg>
+    <span class="section-label__text">{label}</span>
+  </div>
+)}

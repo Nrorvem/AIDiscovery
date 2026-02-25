@@ -17,6 +17,26 @@ const { title, navPages } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | AI Discovery</title>
+    <meta name="description" content="AI Discovery helps Bay Area HVAC companies get recommended by AI search tools like ChatGPT and Google AI. Clean listings, service pages, and structured data." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | AI Discovery`} />
+    <meta property="og:description" content="Get your Bay Area HVAC business recommended by AI search tools. Clean data, clear service pages, structured markup." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} | AI Discovery`} />
+    <meta name="twitter:description" content="AI Discovery helps Bay Area HVAC companies get found by AI-powered search." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import SectionBody from '../components/SectionBody.astro';
+import HeroIllustration from '../components/HeroIllustration.astro';
 import { loadPages, groupSections } from '../lib/content.ts';
 import type { PageData, Section as ContentSection } from '../lib/content.ts';
 
@@ -101,6 +102,19 @@ const displayGroups = buildDisplayGroups(sections);
     // ── Single full-bleed band ─────────────────────────────────────────────
     const section = group.item;
     const suffix = (section.id.split('.').pop() ?? '').toLowerCase();
+
+    // Two-column layout for the home hero
+    if (section.id === 'HOME.HERO') {
+      return (
+        <Section id={section.id} suffix={suffix}>
+          <div class="hero-columns">
+            <div class="hero-text"><SectionBody section={section} /></div>
+            <div class="hero-visual" aria-hidden="true"><HeroIllustration /></div>
+          </div>
+        </Section>
+      );
+    }
+
     return (
       <Section id={section.id} suffix={suffix}>
         <SectionBody section={section} />

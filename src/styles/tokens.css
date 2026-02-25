@@ -8,9 +8,9 @@
 
 :root {
   /* ── Colors ────────────────────────────────────────────────────────────── */
-  --color-bg:           #f4f6fb;   /* page background */
+  --color-bg:           #f0f4fa;   /* page background (slightly saturated) */
   --color-surface:      #ffffff;   /* card / section surface */
-  --color-border:       #e1e7f0;   /* dividers, card outlines */
+  --color-border:       #d8e0ef;   /* dividers, card outlines */
   --color-text:         #0d1120;   /* primary body text */
   --color-muted:        #566074;   /* secondary text, captions */
 
@@ -19,12 +19,14 @@
   --color-primary-tint: #eff6ff;   /* hero bg wash, pill backgrounds */
 
   --color-accent:       #f59e0b;   /* notice / warning highlight */
+  --color-success:      #10b981;   /* checkmarks, included indicators */
 
   /* ── Typography ─────────────────────────────────────────────────────────── */
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-  --text-h1:   clamp(1.875rem, 5vw, 2.625rem); /* 30–42 px */
-  --text-h2:   clamp(1.25rem,  3vw, 1.75rem);  /* 20–28 px */
+  --text-display: clamp(2.5rem, 6vw, 3.75rem);   /* 40–60 px — hero only */
+  --text-h1:   clamp(2.25rem, 5.5vw, 3.25rem);    /* 36–52 px */
+  --text-h2:   clamp(1.5rem,  3.5vw, 2rem);       /* 24–32 px */
   --text-h3:   1.125rem;                        /* 18 px    */
   --text-body: 1rem;                            /* 16 px    */
   --text-sm:   0.875rem;                        /* 14 px    */
@@ -41,6 +43,8 @@
   --space-10:  2.5rem;    /* 40 px */
   --space-12:  3rem;      /* 48 px */
   --space-16:  4rem;      /* 64 px */
+  --space-20:  5rem;      /* 80 px */
+  --space-24:  6rem;      /* 96 px */
 
   /* ── Layout ───────────────────────────────────────────────────────────── */
   --container-max: clamp(48rem, 66vw, 80rem);

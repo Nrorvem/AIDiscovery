@@ -26,7 +26,16 @@ const HEADING_FIELD_SUFFIXES = new Set(['headline', 'h1']);
 const visibleCards = section.subsections.filter(
   sub => sub.body.trim() || sub.fields.some(f => f.body.trim())
 );
+
+// Does this section have a heading field that will receive the label?
+const hasHeadingField = section.directFields.some(f => {
+  const s = (f.id.split('.').pop() ?? '').toLowerCase();
+  return HEADING_FIELD_SUFFIXES.has(s);
+});
 ---
+
+{/* Standalone label for sections without a heading field (e.g. FAQ) */}
+{!hasHeadingField && <SectionIcon sectionId={section.id} />}
 
 {/* Body on the level-1 block itself (e.g. CONTACT.DETAILS list, NOTICE text) */}
 {section.body.trim() && (
@@ -54,8 +63,8 @@ const visibleCards = section.subsections.filter(
     Examples: HOME.OFFERS.A/B/C, HOME.HOW_IT_WORKS.STEP_1/2/3 */}
 {visibleCards.length > 0 && (
   <div class="cards">
-    {visibleCards.map(sub => (
-      <Card>
+    {visibleCards.map((sub, i) => (
+      <Card index={i}>
         {sub.body.trim() && (
           <div class="field" set:html={renderBlockBody(sub.body, sub.id)} />
         )}

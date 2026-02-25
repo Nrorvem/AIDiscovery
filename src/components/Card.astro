@@ -8,11 +8,18 @@
  * Usage:
  *   <div class="cards">
  *     <Card>…content…</Card>
- *     <Card>…content…</Card>
+ *     <Card index={1}>…content…</Card>
  *   </div>
  */
+
+interface Props {
+  index?: number;
+}
+
+const { index } = Astro.props;
+const attrs = typeof index === 'number' ? { 'data-card-index': String(index) } : {};
 ---
 
-<div class="card">
+<div class="card" {...attrs}>
   <slot />
 </div>

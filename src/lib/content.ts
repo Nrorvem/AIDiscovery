@@ -173,7 +173,8 @@ function inlineMd(raw: string): string {
       // Text segment → escape then apply **bold** and _italic_
       return esc(part)
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/_(.+?)_/g, '<em>$1</em>');
+        .replace(/_(.+?)_/g, '<em>$1</em>')
+        .replace(/~~(.+?)~~/g, '<s>$1</s>');
     })
     .join('');
 }
@@ -279,14 +280,20 @@ export function renderBlockBody(body: string, blockId: string): string {
     return `<h3>${esc(firstLine)}</h3>${restHtml}`;
   }
 
-  // PRICE → styled paragraph
+  // PRICE → styled paragraph (supports inline markdown for strikethrough etc.)
   if (suffix === 'PRICE') {
-    return `<p class="price">${esc(body.trim())}</p>`;
+    return `<p class="price">${inlineMd(body.trim())}</p>`;
   }
 
   // TIMELINE → plain paragraph
   if (suffix === 'TIMELINE') {
     return `<p class="timeline">${esc(body.trim())}</p>`;
+  }
+
+  // INCLUDES_DETAIL → collapsible disclosure widget (no JS required)
+  if (suffix === 'INCLUDES_DETAIL') {
+    const content = renderLines(lines);
+    return `<details class="includes-detail"><summary>See all details</summary>${content}</details>`;
   }
 
   // Everything else: parse line by line

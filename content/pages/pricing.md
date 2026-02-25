@@ -20,7 +20,10 @@ One-time Foundation to establish your presence. Monthly management to keep growi
 AI Readiness Snapshot
 
 ## PRICING.SNAPSHOT.PRICE
-$0 (limited) or $149 • delivered in 48 hours
+~~$149~~ $0 for a limited time
+
+## PRICING.SNAPSHOT.TIMELINE
+Timeline: within 48 hours
 
 ## PRICING.SNAPSHOT.INCLUDES
 Includes:
@@ -36,30 +39,30 @@ CTA: Get Snapshot → {{CALENDLY_LINK}}
 # PRICING.FOUNDATION_LITE
 
 ## PRICING.FOUNDATION_LITE.TITLE
-Foundation Lite (defined scope)
+Foundation Lite
 
 ## PRICING.FOUNDATION_LITE.PRICE
-$1,499 one-time (intro pricing for first ~5 clients)
+$1,499 one-time
 
 ## PRICING.FOUNDATION_LITE.TIMELINE
 Timeline: 7 business days
 
 ## PRICING.FOUNDATION_LITE.INCLUDES
-Includes:
-- Canonical dataset (services + service area + trust signals)
 - 4 high-intent service pages
-- 1 Service Areas page/section
 - 20 FAQs distributed across pages
-- Schema JSON-LD (LocalBusiness + Service + FAQPage where applicable)
-- Google Business Profile “safe edits” checklist + execution
-- Basic tracking (forms + click-to-call)
+- Machine-readable structured data
+- GBP safe-edit + basic tracking
 
-## PRICING.FOUNDATION_LITE.EXCLUDES
-Excludes:
+## PRICING.FOUNDATION_LITE.INCLUDES_DETAIL
+More included:
+- Complete business dataset
+- 1 service areas page/section
+
+Not included:
 - Full site redesign
 - Multi-location setups
 - Photo/video production
-- Advanced PR/citation campaigns
+- PR/citation campaigns
 
 ## PRICING.FOUNDATION_LITE.CTA
 CTA: Book Lite → {{CALENDLY_LINK}}
@@ -78,12 +81,13 @@ $2,999 one-time
 Timeline: 10 business days
 
 ## PRICING.FOUNDATION_STANDARD.INCLUDES
-Includes everything in Lite, plus:
-- 8 service pages total
-- 1 Trust/Proof page (license, insurance, warranty, financing, certifications)
-- 1 case study / job story page
-- Listings consistency pass (top 5 sources you choose)
-- Optional call tracking number (if you agree)
+- Everything in Foundation Lite
+- 8 service pages (double the Lite set)
+- Trust/Proof page + 1 case study
+- Listings cleanup (top 5 sources)
+
+## PRICING.FOUNDATION_STANDARD.INCLUDES_DETAIL
+- Optional call tracking number
 
 ## PRICING.FOUNDATION_STANDARD.CTA
 CTA: Book Standard → {{CALENDLY_LINK}}

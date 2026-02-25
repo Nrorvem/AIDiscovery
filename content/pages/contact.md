@@ -7,10 +7,10 @@ title: Contact
 # CONTACT.HEADER
 
 ## CONTACT.HEADER.H1
-Get your AI Readiness Snapshot (48 hours)
+Let's talk about your HVAC visibility
 
 ## CONTACT.HEADER.SUBHEAD
-Send your website + Google Business Profile link (if you have it). We’ll reply with next steps.
+Send your website URL and we’ll take a look. Or book a free 15-minute call to talk through your situation.
 
 ---
 
@@ -25,7 +25,7 @@ Send your website + Google Business Profile link (if you have it). We’ll reply
 # CONTACT.WHAT_WE_NEED
 
 ## CONTACT.WHAT_WE_NEED.HEADLINE
-What we need from you:
+To get started, have these ready:
 
 - Primary service area (cities/ZIPs)
 - Top 5 services you want to win (heat pumps? ductless? furnace repair?)

@@ -7,10 +7,10 @@ title: Home
 # HOME.HERO
 
 ## HOME.HERO.HEADLINE
-Bay Area HVAC “AI Discovery” that turns your business into the obvious, verifiable choice
+Get found when Bay Area homeowners ask AI for HVAC help
 
 ## HOME.HERO.SUBHEAD
-The HVAC companies AI recommends have clean data, consistent listings, and service pages that answer real questions. We build that for Bay Area HVAC teams — fast.
+AI tools like ChatGPT and Google AI recommend HVAC companies they can verify. We make your business the one they trust — clean listings, clear service pages, and structured data that machines can read.
 
 ## HOME.HERO.CTA_PRIMARY
 Primary CTA: Get Snapshot → {{CALENDLY_LINK}}
@@ -23,16 +23,16 @@ Secondary CTA: View plans → /pricing
 # HOME.UNDER_HERO_BULLETS
 
 - More qualified calls, fewer wasted inquiries
-- Consistent listings across every platform
+- Consistent listings across Google, Yelp, and every directory
 - Service pages and FAQs built for AI discovery and conversion
-- Schema markup that makes your site machine-readable
+- Structured data that AI tools can read and trust
 
 ---
 
 # HOME.PROBLEM
 
 ## HOME.PROBLEM.HEADLINE
-Why most HVAC websites are invisible to AI-style search
+Why AI skips most HVAC companies
 
 ## HOME.PROBLEM.BULLETS
 - Service areas are vague (“Bay Area”) instead of precise (cities/ZIPs)
@@ -49,18 +49,18 @@ You do great work. But online, your business looks uncertain — so you get skip
 # HOME.MECHANISM
 
 ## HOME.MECHANISM.HEADLINE
-We build your HVAC “Service Graph” + Proof Layer
+We make your business easy for AI to understand and recommend
 
 ## HOME.MECHANISM.INTRO
 Six components, fully implemented:
 
 ## HOME.MECHANISM.STEPS
-1. Canonical service catalog
-2. Precise service area (cities + ZIPs)
-3. Website upgrades (service pages + FAQs + proof)
-4. Structured data (Schema JSON-LD)
-5. Listings cleanup + ongoing monitoring
-6. Tracking to measure impact
+1. Define exactly what you do — every service, clearly listed
+2. Map where you work — specific cities and zip codes
+3. Build pages that answer real buyer questions
+4. Add machine-readable markup so AI tools can parse your site
+5. Fix your listings so every platform shows the same correct info
+6. Set up tracking so you can see what is working
 
 ---
 
@@ -83,7 +83,7 @@ Not a fit if you have no job history or proof assets yet.
 # HOME.HOW_IT_WORKS
 
 ## HOME.HOW_IT_WORKS.HEADLINE
-How it works
+Three steps to AI-ready visibility
 
 ### HOME.HOW_IT_WORKS.STEP_1
 1) Snapshot (48 hours)
@@ -107,10 +107,10 @@ What we offer
 ### HOME.OFFERS.A
 
 #### HOME.OFFERS.A.TITLE
-Offer A — AI Readiness Snapshot
+AI Readiness Snapshot
 
 #### HOME.OFFERS.A.PRICE
-$0 (cold outreach / limited spots) or $149 (inbound)
+Free for qualifying businesses
 
 #### HOME.OFFERS.A.TIMELINE
 Delivered in 48 hours.
@@ -127,17 +127,17 @@ CTA: Get Snapshot → {{CALENDLY_LINK}}
 ### HOME.OFFERS.B
 
 #### HOME.OFFERS.B.TITLE
-Offer B — HVAC AI Discovery Foundation (one-time)
+HVAC AI Discovery Foundation
 
 #### HOME.OFFERS.B.DETAILS
 Choose Lite or Standard (details on Pricing page).
 
 #### HOME.OFFERS.B.DELIVERABLES
 Core deliverables:
-- Canonical business dataset (“entity sheet”)
+- Complete business profile
 - Service catalog + service area precision
 - Website service pages + FAQs
-- Structured data (Schema JSON-LD)
+- Machine-readable structured data
 - Google Business Profile “safe edits”
 - Basic tracking + baseline report
 
@@ -147,7 +147,7 @@ CTA: View plans → /pricing
 ### HOME.OFFERS.C
 
 #### HOME.OFFERS.C.TITLE
-Offer C — Ongoing AI Visibility Management (monthly)
+Ongoing Visibility Management
 
 #### HOME.OFFERS.C.DELIVERABLES
 We maintain accuracy and add proof over time:
@@ -164,7 +164,7 @@ CTA: Book call → {{CALENDLY_LINK}}
 # HOME.SOCIAL_PROOF
 
 ## HOME.SOCIAL_PROOF.EARLY_STAGE_NOTE
-We’re onboarding our first Bay Area HVAC partners.
+We work with a small number of HVAC companies at a time so every project gets full attention. Currently accepting new partners in the Bay Area.
 Want an early-mover slot? Request a Snapshot and we’ll tell you if it’s a fit.
 
 ---
@@ -180,8 +180,20 @@ No. We guarantee the deliverables: clearer service pages, consistent listings, a
 Yes. We create pages, FAQs, and schema separately from your CMS, so any stack works.
 
 ## HOME.FAQ.Q3
-**Will you touch our Google Business Profile?**  
+**Will you touch our Google Business Profile?**
 Yes—with owner permission, using a “safe edits” approach and a change log.
+
+## HOME.FAQ.Q4
+**How long until we see results?**
+Listings fixes take effect within 30 days. AI recommendation improvements typically show within 60–90 days, depending on your market and existing online presence.
+
+## HOME.FAQ.Q5
+**Do we need to change our website platform?**
+No. We work with WordPress, Wix, Squarespace, Webflow, and custom sites. We add pages and data alongside your existing setup.
+
+## HOME.FAQ.Q6
+**What if we already rank well on Google?**
+Google rankings and AI recommendations are different systems. A company can rank #1 on Google but still be invisible to ChatGPT or Google AI Overview. We address the AI side specifically.
 
 ---
 
